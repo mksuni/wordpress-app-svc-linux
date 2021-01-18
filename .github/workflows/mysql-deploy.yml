@@ -1,0 +1,16 @@
+on: [push]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+     - uses: actions/checkout@v1
+     - uses: Azure/login@v1
+       with:
+         creds: ${{secrets.AZURE_CREDENTIALS}}
+     - uses: azure/mysql@v1
+       with:
+        connection-string: ${{ secrets.CONNECTION_STRING }}
+        server-name: demo-server1.mysql.database.azure.com
+        sql-file: "sql/update_db.sql"
